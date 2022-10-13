@@ -1,0 +1,15 @@
+@import '../../../styles/variables.scss';
+
+.header {
+  background-color: #0770cf;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--link {
+    color: #fff;
+    font-size: 24px;
+    margin: 20px;
+  }
+}

@@ -1,0 +1,28 @@
+.products {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px auto;
+  background-color: #0770cf;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid rgb(226, 154, 12);
+  border-radius: 5px;
+  box-shadow: 0 0 8px #a14619;
+}
+
+.input {
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
+  width: 120px;
+  margin-right: 10px
+}
+
+.filter-title {
+  margin-bottom: 10px;
+}
