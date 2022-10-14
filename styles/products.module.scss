@@ -26,3 +26,32 @@
 .filter-title {
   margin-bottom: 10px;
 }
+
+.select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.filter-button {
+  margin-top: 20px;
+  height: 30px;
+  background-color: rgb(231 118 35);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.products-wrapper {
+  max-width: 1400px;
+  margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  grid-gap: 60px;
+  width: 100%;
+  color: #fff;
+  padding: 20px;
+}
