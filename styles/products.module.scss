@@ -48,10 +48,16 @@
   max-width: 1400px;
   margin: 20px auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-template-rows: 1fr;
   grid-gap: 60px;
   width: 100%;
   color: #fff;
   padding: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .products-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

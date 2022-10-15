@@ -1,6 +1,7 @@
 import {useState, useEffect, useMemo} from 'react';
 import products from '../miista-export.json';
 import { Layout } from '../ui/templates';
+import { Pagination } from '../ui/organims';
 import { Product } from '../ui/molecules';
 
 import styles from '../styles/products.module.scss'
@@ -37,8 +38,8 @@ const Products = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [selectedTag, setSelectedTag] = useState<string>('');
-  const [pagination, setPagination] = useState<any>();
   const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState<number>(10)
   const [list, setList] = useState<ProductProps[]>(products?.data?.allContentfulProductPage?.edges);
 
   const data = useMemo(() => list, [products])
@@ -60,6 +61,7 @@ const Products = () => {
         }
       })
     })
+    //tags
     data.map((item) => {
       item?.node?.categoryTags?.map(tag => {
         if(!filterTags.includes(tag.trim())) {
@@ -68,7 +70,6 @@ const Products = () => {
         }
       })
     })
-    //tags
   }
 
 
@@ -80,13 +81,9 @@ const Products = () => {
     setSelectedTag(e.target.value);
   }
 
-  useEffect(() => {
-    setPagination(Math.ceil(data.length/9))
-  }, []);
-
   const onFilter = () => {
     const byPrice = data.filter((product) => {
-      const price = parseInt(product.node.shopifyProductEu.variants.edges[0].node.price);
+      const price = Number(product.node.shopifyProductEu.variants.edges[0].node.price);
       if (priceFrom && priceTo) {
         return price > priceFrom && price < priceTo
       } else if (priceFrom && !priceTo) {
@@ -103,6 +100,18 @@ const Products = () => {
     }).filter((product) => product.node.categoryTags?.some((tag) => tag.includes(selectedTag)))
     setList(byPrice)
   }
+
+  //pagination
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = list.slice(indexOfFirstProduct, indexOfLastProduct)
+
+  const paginate = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  console.log(list, 'data')
+
 
   return (
     <Layout>
@@ -139,7 +148,7 @@ const Products = () => {
         </button>
       </div>
       <div className={styles['products-wrapper']}>
-        { list.map((product, i) => (
+        { currentProducts.map((product, i) => (
           <Product
             key={i}
             title={product.node.name}
@@ -150,18 +159,12 @@ const Products = () => {
           />
         ))}
       </div>
-      {/* <div className="pagination">
-        {
-          pagination.map((page, i) =>
-            <span
-              key={i}
-              className={`${ i == currentPage ? styles.active : "" } `}
-              onClick={() => setCurrentPage(i)}>
-              {i + 1}
-            </span>
-          )
-        }
-      </div> */}
+      <Pagination 
+        productsPerPage={productsPerPage} 
+        totalProducts={list.length} 
+        paginate={paginate}
+        currentPage={currentPage}
+      />
     </Layout>
   )
 }
